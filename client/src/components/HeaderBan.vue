@@ -1,8 +1,8 @@
 <template>
   <div class="header">
     <div class="title">
-      <span class="title-small">React & NodeJS</span>
-      <span class="title-large">Check it</span>
+      <span class="title-small">Vue & NodeJS</span>
+      <span class="title-large">MEVN stack</span>
     </div>
     <div>
       <img

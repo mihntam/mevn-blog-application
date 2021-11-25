@@ -1,19 +1,37 @@
 <template>
   <div class="register">
     <span class="title">Register</span>
-    <form class="form">
+    <form class="form" @submit.prevent="handleRegister">
       <label>Username</label>
-      <input class="input" type="text" placeholder="Enter your username..." />
+      <input
+        class="input"
+        type="text"
+        placeholder="Enter your username..."
+        required
+        v-model="register.username"
+      />
       <label>Email</label>
-      <input class="input" type="text" placeholder="Enter your email..." />
+      <input
+        class="input"
+        type="text"
+        placeholder="Enter your email..."
+        v-model="register.email"
+        required
+      />
       <label>Password</label>
       <input
         class="input"
         type="password"
         placeholder="Enter your password..."
+        v-model="register.password"
+        required
       />
       <button class="register-button">Register</button>
     </form>
+    <span class="error" v-if="error">
+      Oh shit!!! We have an error <br />
+      Please try again :)</span
+    >
     <button class="login-button">
       <router-link to="/login">Login</router-link>
     </button>
@@ -21,8 +39,37 @@
 </template>
 
 <script>
+import BlogService from "../services/BlogService";
+
 export default {
   name: "Register",
+  data() {
+    return {
+      register: {
+        username: "",
+        email: "",
+        password: "",
+      },
+      error: false,
+    };
+  },
+  methods: {
+    handleRegister() {
+      BlogService.postAuth(this.register)
+        .then(() => {
+          this.register = {
+            username: "",
+            email: "",
+            password: "",
+          };
+          this.$router.push("/login");
+        })
+        .catch((error) => {
+          this.error = true;
+          console.log("There was an error:" + error);
+        });
+    },
+  },
 };
 </script>
 
@@ -75,6 +122,11 @@ export default {
   border: none;
   border-radius: 10px;
   text-align: center;
+}
+
+.error {
+  margin-top: 20px;
+  color: red;
 }
 
 .login-button {

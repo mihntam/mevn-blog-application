@@ -5,10 +5,10 @@
       <div class="post-cats">
         <span
           class="post-cat"
-          v-for="(categorie, index) in post.categories"
+          v-for="(categories, index) in post.categories"
           :key="index"
         >
-          {{ categorie }}
+          {{ categories }}
         </span>
       </div>
       <router-link

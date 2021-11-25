@@ -1,17 +1,29 @@
 <template>
   <div class="login">
     <span class="title">Login</span>
-    <form class="form">
-      <label>Email</label>
-      <input class="input" type="text" placeholder="Enter your email..." />
+    <form class="form" @submit.prevent="handleLogin">
+      <label>username</label>
+      <input
+        class="input"
+        type="text"
+        placeholder="Enter your username..."
+        required
+        v-model="login.username"
+      />
       <label>Password</label>
       <input
         class="input"
         type="password"
         placeholder="Enter your password..."
+        required
+        v-model="login.password"
       />
       <button class="login-button">Login</button>
     </form>
+    <span class="error" v-if="error">
+      Oh shit!!! We have an error <br />
+      Please try again :)</span
+    >
     <button class="register-button">
       <router-link to="/register">Register</router-link>
     </button>
@@ -19,8 +31,36 @@
 </template>
 
 <script>
+import BlogService from "../services/BlogService";
+
 export default {
   name: "Login",
+  data() {
+    return {
+      login: {
+        username: "",
+        password: "",
+      },
+      error: false,
+    };
+  },
+  methods: {
+    handleLogin() {
+      BlogService.postLogin(this.login)
+        .then((res) => {
+          this.register = {
+            username: "",
+            password: "",
+          };
+          console.log(res);
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          this.error = true;
+          console.log("There was an error:" + error);
+        });
+    },
+  },
 };
 </script>
 
@@ -73,6 +113,11 @@ export default {
   border: none;
   border-radius: 10px;
   text-align: center;
+}
+
+.error {
+  margin-top: 20px;
+  color: red;
 }
 
 .register-button {

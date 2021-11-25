@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "../pages/Home.vue";
 import Write from "../pages/Write.vue";
+import About from "../pages/About.vue";
 import Login from "../pages/Login.vue";
 import Register from "../pages/Register.vue";
 import Setting from "../pages/Setting.vue";
@@ -21,6 +22,11 @@ export default new Router({
       path: "/write",
       name: "Write",
       component: Write,
+    },
+    {
+      path: "/about",
+      name: "About",
+      component: About,
     },
     {
       path: "/login",

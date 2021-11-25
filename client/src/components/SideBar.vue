@@ -14,7 +14,14 @@
       <span class="title">CATEGORIES</span>
       <ul class="cat">
         <li class="cat-item" v-for="cat in categories" :key="cat._id">
-          {{ cat.name }}
+          <router-link
+            :to="{
+              path: '/',
+              query: { cat: cat.name },
+            }"
+          >
+            {{ cat.name }}
+          </router-link>
         </li>
       </ul>
     </div>
@@ -31,7 +38,7 @@
 </template>
 
 <script>
-import CategorieService from "../services/CategorieService";
+import BlogService from "../services/BlogService";
 
 export default {
   name: "SideBar",
@@ -41,10 +48,9 @@ export default {
     };
   },
   created() {
-    CategorieService.getCats()
+    BlogService.getCats()
       .then((res) => {
         this.categories = res.data;
-        console.log(this.categories);
       })
       .catch((error) => {
         console.log("There was an error:" + error.res);

@@ -13,9 +13,14 @@
         <span>
           Author:
           <b class="single-post-author">
-            <!-- <Link class="link" to="/posts?username=Safak"> -->
-            {{ post.username }}
-            <!-- </Link> -->
+            <router-link
+              :to="{
+                path: '/',
+                query: { user: post.username },
+              }"
+            >
+              {{ post.username }}
+            </router-link>
           </b>
         </span>
         <span>{{ new Date(post.createdAt).toDateString() }}</span>
@@ -28,7 +33,7 @@
 </template>
 
 <script>
-import PostService from "../services/PostService";
+import BlogService from "../services/BlogService";
 
 export default {
   name: "SinglePost",
@@ -41,7 +46,7 @@ export default {
     const location = this.$route.fullPath;
     const path = location.split("/")[2];
 
-    PostService.getPost(path)
+    BlogService.getPost(path)
       .then((res) => {
         this.post = res.data;
       })

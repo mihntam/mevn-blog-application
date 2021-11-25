@@ -13,7 +13,7 @@ import HeaderBan from "../components/HeaderBan.vue";
 import Posts from "../components/Posts.vue";
 import SideBar from "../components/SideBar.vue";
 
-import PostService from "../services/PostService";
+import BlogService from "../services/BlogService";
 
 export default {
   name: "Home",
@@ -28,7 +28,10 @@ export default {
     };
   },
   created() {
-    PostService.getPosts()
+    const location = this.$route.fullPath;
+    const search = location.split("/")[1];
+
+    BlogService.getPosts(search)
       .then((res) => {
         this.posts = res.data;
       })
