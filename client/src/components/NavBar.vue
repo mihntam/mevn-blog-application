@@ -13,14 +13,18 @@
         <li class="menu-item" v-if="isLogin">
           <router-link to="/write">WRITE</router-link>
         </li>
-        <li class="menu-item" v-if="isLogin">
+        <!-- <li class="menu-item" v-if="isLogin">
           <router-link to="/setting">SETTING</router-link>
+        </li> -->
+        <li class="menu-item log-out" v-if="isLogin" @click="handleLogout">
+          LOGOUT
         </li>
-        <li class="menu-item log-out" v-if="isLogin" @click="logOut">LOGOUT</li>
       </ul>
     </div>
     <div class="nav-right nav-menu">
-      <img v-if="isLogin" class="user-image" :src="user.profilePic" alt="" />
+      <router-link v-if="isLogin" to="/setting"
+        ><img class="user-image" :src="user.profilePic" alt=""
+      /></router-link>
       <div class="non-user" v-else>
         <li class="menu-item"><router-link to="/login">LOGIN</router-link></li>
         <li class="menu-item">
@@ -38,11 +42,12 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "NavBar",
-  computed: {
-    ...mapGetters(["user", "isLogin"]),
-  },
+  computed: { ...mapGetters(["user", "isLogin"]) },
   methods: {
     ...mapActions(["logOut"]),
+    handleLogout() {
+      this.logOut();
+    },
   },
 };
 </script>

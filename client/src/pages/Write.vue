@@ -1,5 +1,5 @@
 <template>
-  <div class="write">
+  <div v-if="user" class="write">
     <img v-if="file" class="write-img" :src="post_photo" alt="" />
     <form class="write-form" @submit.prevent="handleSubmit">
       <div class="write-form-group">
@@ -60,11 +60,15 @@ export default {
       this.post_photo = data;
     },
     handleSubmit() {
-      const newPost = {
-        username: this.user.username,
-        title: this.title,
-        desc: this.desc,
-      };
+      let newPost = {};
+      if (this.user.username) {
+        newPost = {
+          username: this.user.username,
+          title: this.title,
+          desc: this.desc,
+        };
+      }
+
       if (this.file) {
         const data = new FormData();
         const filename = Date.now() + this.file.name;
@@ -86,6 +90,7 @@ export default {
           this.$router.push("/post/" + res.data._id);
         })
         .catch((error) => {
+          alert("Can't add post");
           console.log("There was an error:" + error.res);
         });
     },

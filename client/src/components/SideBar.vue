@@ -1,11 +1,8 @@
 <template>
-  <div class="side-bar">
+  <div v-if="isLogin" class="side-bar">
     <div class="item">
       <span class="title">ABOUT ME</span>
-      <img
-        src="https://64.media.tumblr.com/c081f03eed64c2fc7e44c5302629c9e0/tumblr_oqphqntx3W1qbd81ro1_1280.jpg"
-        alt=""
-      />
+      <img :src="user.profilePic" alt="" />
       <p class="content">
         Lorem, ipsum dolor sit amet consectetur adipisicing elit.
       </p>
@@ -39,6 +36,7 @@
 
 <script>
 import BlogService from "../services/BlogService";
+import { mapGetters } from "vuex";
 
 export default {
   name: "SideBar",
@@ -47,6 +45,7 @@ export default {
       categories: [],
     };
   },
+  computed: { ...mapGetters(["user", "isLogin"]) },
   created() {
     BlogService.getCats()
       .then((res) => {

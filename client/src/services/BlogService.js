@@ -20,6 +20,12 @@ export default {
   async newPost(data) {
     return apiClient.post("/posts", data);
   },
+  async putPost(id, data) {
+    return apiClient.put("/posts/" + id, data);
+  },
+  async deletePost(id, username) {
+    return apiClient.delete("/posts/" + id, username);
+  },
   //Category
   async getCats() {
     return apiClient.get("/categories");

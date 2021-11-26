@@ -13,4 +13,7 @@ export default {
     commit("resetAll");
     commit("clearUserData");
   },
+  isLogin({ commit }) {
+    commit("setLogin", true);
+  },
 };

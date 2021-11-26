@@ -1,6 +1,6 @@
 <template>
   <div class="settings">
-    <div class="wrapper">
+    <div v-if="user" class="wrapper">
       <div class="title">
         <span class="title-update">Update Your Account</span>
         <span class="title-delete">Delete Account</span>
@@ -8,11 +8,8 @@
       <form class="form">
         <label>Profile Picture</label>
         <div class="profile">
-          <img
-            src="https://images.pexels.com/photos/6685428/pexels-photo-6685428.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-            alt=""
-          />
-          <label htmlFor="file-input">
+          <img v-if="user" :src="user.profilePic" alt="" />
+          <label for="file-input">
             <i class="profile-icon far fa-user-circle"></i>
           </label>
           <input
@@ -23,21 +20,26 @@
           />
         </div>
         <label>Username</label>
-        <input type="text" placeholder="Safak" name="name" />
+        <input type="text" v-model="user.username" name="name" />
         <label>Email</label>
-        <input type="email" placeholder="safak@gmail.com" name="email" />
+        <input type="email" v-model="user.email" name="email" />
         <label>Password</label>
-        <input type="password" placeholder="Password" name="password" />
+        <input type="password" v-model="user.password" name="password" />
         <button class="submit-button" type="submit">Update</button>
       </form>
     </div>
-    <Sidebar />
+    <side-bar />
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import SideBar from "../components/SideBar.vue";
+
 export default {
+  components: { SideBar },
   name: "Setting",
+  computed: { ...mapGetters(["user"]) },
 };
 </script>
 
