@@ -17,6 +17,9 @@ export default {
   async getPost(id) {
     return apiClient.get("/posts/" + id);
   },
+  async newPost(data) {
+    return apiClient.post("/posts", data);
+  },
   //Category
   async getCats() {
     return apiClient.get("/categories");
@@ -27,5 +30,9 @@ export default {
   },
   async postLogin(data) {
     return apiClient.post("/auth/login", data);
+  },
+  //UpFile
+  async postFile(data) {
+    return apiClient.post("/upload", data);
   },
 };

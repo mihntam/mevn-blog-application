@@ -1,6 +1,6 @@
 <template>
   <div class="post">
-    <img v-if="post.photo" class="post-img" :src="post.photo" alt="" />
+    <img v-if="post.photo" class="post-img" :src="path + post.photo" alt="" />
     <div class="post-info">
       <div class="post-cats">
         <span
@@ -35,6 +35,11 @@ export default {
   name: "Post",
   props: {
     post: Object,
+  },
+  data() {
+    return {
+      path: "http://localhost:5000/images/",
+    };
   },
 };
 </script>

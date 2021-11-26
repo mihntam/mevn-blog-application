@@ -1,7 +1,12 @@
 <template>
   <div class="single-post">
     <div class="singlePostWrapper">
-      <img v-if="post.photo" class="single-post-img" :src="post.photo" alt="" />
+      <img
+        v-if="post.photo"
+        class="single-post-img"
+        :src="path + post.photo"
+        alt=""
+      />
       <h1 class="single-post-title">
         {{ post.title }}
         <div class="single-post-edit">
@@ -40,6 +45,7 @@ export default {
   data() {
     return {
       post: {},
+      path: "http://localhost:5000/images/",
     };
   },
   created() {

@@ -18,9 +18,9 @@
         required
         v-model="login.password"
       />
-      <button class="login-button">Login</button>
+      <button class="login-button" type="submit">Login</button>
     </form>
-    <span class="error" v-if="error">
+    <span class="error" v-if="isError">
       Oh shit!!! We have an error <br />
       Please try again :)</span
     >
@@ -32,6 +32,7 @@
 
 <script>
 import BlogService from "../services/BlogService";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Login",
@@ -41,10 +42,13 @@ export default {
         username: "",
         password: "",
       },
-      error: false,
     };
   },
+  computed: {
+    ...mapGetters(["user", "isLogin", "isError"]),
+  },
   methods: {
+    ...mapActions(["loginSuccess", "loginFailed"]),
     handleLogin() {
       BlogService.postLogin(this.login)
         .then((res) => {
@@ -52,11 +56,12 @@ export default {
             username: "",
             password: "",
           };
-          console.log(res);
+          this.loginSuccess(res.data);
           this.$router.push("/");
         })
         .catch((error) => {
-          this.error = true;
+          this.loginFailed();
+          console.log(this.isLogin);
           console.log("There was an error:" + error);
         });
     },
